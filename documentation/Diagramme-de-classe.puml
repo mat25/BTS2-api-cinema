@@ -4,8 +4,6 @@ class Salle {
 - id : int
 - nom : string
 - nbPlace : int
-- email : string
-- dateAdhesion : DateTime
 }
 
 class Séance {
@@ -21,7 +19,7 @@ class Film {
 - duree : int
 }
 
-class Utilisateur {
+class User {
 - id : int
 - email : string
 - motDePasse : string
@@ -38,7 +36,7 @@ class Réservation {
 Séance"0..*" --> "1..1"Film :> projecte
 Séance"0..*" --> "1..1"Salle :> Se Déroule
 
-Réservation"0..*" <-- "1..1"Utilisateur :< réalise
+Réservation"0..*" <-- "1..1"User :< réalise
 
 Séance"1..1" <-- "0..*"Réservation :< Concerne
 @enduml
