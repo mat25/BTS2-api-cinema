@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Film;
+use App\Entity\Seance;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,28 @@ class FilmRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Film::class);
     }
+
+    public function listerFilmsAAfficher() :array {
+        $dateJour = new \DateTime();
+        return $this->createQueryBuilder('f')
+            ->innerJoin(Seance::class,'s','WITH','s.film = f.id')
+            ->where('s.dateProjection > :date')
+            ->setParameter('date', $dateJour)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function detailsFilm(int $idFilm) :array {
+        return $this->createQueryBuilder('f')
+            ->innerJoin(Seance::class,'s','WITH','s.film = f.id')
+            ->where('f.id = :id')
+            ->setParameter('id', $idFilm)
+            ->orderBy('s.dateProjection', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Film[] Returns an array of Film objects
