@@ -33,10 +33,14 @@ class FilmRepository extends ServiceEntityRepository
     }
 
     public function detailsFilm(int $idFilm) :array {
+        $dateJour = new \DateTime();
         return $this->createQueryBuilder('f')
-            ->innerJoin(Seance::class,'s','WITH','s.film = f.id')
+            ->leftJoin('f.seances', 's')
+            ->addSelect('s')
             ->where('f.id = :id')
+            ->andWhere('s.dateProjection >= :date')
             ->setParameter('id', $idFilm)
+            ->setParameter('date', $dateJour)
             ->orderBy('s.dateProjection', 'ASC')
             ->getQuery()
             ->getResult();
