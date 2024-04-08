@@ -23,9 +23,11 @@ class Seance
     private ?\DateTimeInterface $dateProjection = null;
 
     #[ORM\Column]
+    #[Groups(['details_films'])]
     private ?float $tarifNormal = null;
 
     #[ORM\Column]
+    #[Groups(['details_films'])]
     private ?float $tarifReduit = null;
 
     #[ORM\OneToMany(mappedBy: 'Seance', targetEntity: Reservation::class)]
