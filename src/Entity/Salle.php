@@ -17,9 +17,11 @@ class Salle
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['details_films'])]
     private ?string $nomSalle = null;
 
     #[ORM\Column]
+    #[Groups(['details_films'])]
     private ?int $nbPlace = null;
 
     public function __construct()
