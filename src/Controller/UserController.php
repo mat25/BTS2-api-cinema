@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Repository\UserRepository;
+use App\Service\Connexion;
 use App\Service\CreerUser;
 use App\Service\CreerUserRequete;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,24 @@ class UserController extends AbstractController
         } catch (\Exception $e) {
             // Si erreur on renvoie status 400 avec l'erreur
             return new JsonResponse($e->getMessage(), 400);
+        }
+
+    }
+
+    #[Route('/login', name: 'app_user_login')]
+    public function login(Request $request,Connexion $connexion): Response|JsonResponse
+    {
+        // récupere les données de la requete sous form de tableau
+        $donnees = json_decode($request->getContent(), true);
+        // Création des classes
+        $email = $donnees["email"] ;
+        $password = $donnees["password"];
+        $reponse = $connexion->execute($email,$password);
+
+        if (!isset($reponse["token"])) {
+            return new JsonResponse($reponse,400);
+        } else {
+            return new JsonResponse(['token' => $reponse["token"]],200);
         }
 
     }

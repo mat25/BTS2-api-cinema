@@ -3,7 +3,6 @@
 namespace App\Service ;
 use Symfony\Component\Validator\Constraints as Assert;
 class CreerUserRequete {
-    public string $nom ;
     #[Assert\NotBlank(
         message: "L'email est obligatoire"
     )]

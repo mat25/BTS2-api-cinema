@@ -59,9 +59,9 @@ class Reservation
         return $this->DateRéservation;
     }
 
-    public function setDateRéservation(\DateTimeInterface $DateRéservation): static
+    public function setDateRéservation(): static
     {
-        $this->DateRéservation = $DateRéservation;
+        $this->DateRéservation = new \DateTime();
 
         return $this;
     }

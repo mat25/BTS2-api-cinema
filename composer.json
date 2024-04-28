@@ -43,7 +43,8 @@
         "symfony/yaml": "7.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "xylis/faker-cinema-providers": "^2.0"
+        "xylis/faker-cinema-providers": "^2.0",
+        "lexik/jwt-authentication-bundle": "v2.20.3"
     },
     "config": {
         "allow-plugins": {
