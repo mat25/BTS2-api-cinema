@@ -92,6 +92,7 @@ class CreerReservation {
         $reservation->setDateRéservation();
         $reservation->setMontant($seance->getTarifNormal()*$nbPlaceReserver);
         $reservation->addUser($user);
+        dd($seance);
         $reservation->addSeance($seance);
 
         // Ajout a la BDD
