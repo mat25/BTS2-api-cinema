@@ -38,10 +38,9 @@ class SeanceController extends AbstractController
             // Créer le user
             $reservation = $creerReservation->execute($requete,$email);
 
-            dd("réussi");
             // Si pas d'erreur on renvoie le User avec un status 201
-            $userSerialized = $serializer->serialize($reservation, 'json', ['groups' => 'info_reservation']);
-            return new Response($userSerialized, 201, [
+            $reservationSerialized = $serializer->serialize($reservation, 'json', ['groups' => 'info_reservation']);
+            return new Response($reservationSerialized, 201, [
                 'content-type' => 'application/json'
             ]);
         } catch (\Exception $e) {

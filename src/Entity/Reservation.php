@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -14,118 +15,122 @@ class Reservation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['info_reservation'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['info_reservation'])]
     private ?int $nbPlaceReservation = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['info_reservation'])]
     private ?\DateTimeInterface $DateRéservation = null;
 
     #[ORM\Column]
+    #[Groups(['info_reservation'])]
     private ?float $montant = null;
 
-    #[ORM\ManyToOne(targetEntity: Seance::class, inversedBy: 'reservations')]
-    private Collection $Seance;
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?Seance $Seance = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reservations')]
-    private Collection $users;
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?User $users = null;
 
-    public function __construct()
-    {
-        $this->Seance = new ArrayCollection();
-        $this->users = new ArrayCollection();
-    }
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int|null
+     */
     public function getNbPlaceReservation(): ?int
     {
         return $this->nbPlaceReservation;
     }
 
-    public function setNbPlaceReservation(int $nbPlaceReservation): static
+    /**
+     * @param int|null $nbPlaceReservation
+     */
+    public function setNbPlaceReservation(?int $nbPlaceReservation): void
     {
         $this->nbPlaceReservation = $nbPlaceReservation;
-
-        return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateRéservation(): ?\DateTimeInterface
     {
         return $this->DateRéservation;
     }
 
-    public function setDateRéservation(): static
+    /**
+     * @param \DateTimeInterface|null $DateRéservation
+     */
+    public function setDateRéservation(): void
     {
         $this->DateRéservation = new \DateTime();
-
-        return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(float $montant): static
+    /**
+     * @param float|null $montant
+     */
+    public function setMontant(?float $montant): void
     {
         $this->montant = $montant;
-
-        return $this;
     }
 
     /**
-     * @return Collection<int, Seance>
+     * @return Seance|null
      */
-    public function getSeance(): Collection
+    public function getSeance(): ?Seance
     {
         return $this->Seance;
     }
 
-    public function addSeance(Seance $seance): static
+    /**
+     * @param Seance|null $Seance
+     */
+    public function setSeance(?Seance $Seance): void
     {
-        if (!$this->Seance->contains($seance)) {
-            $this->Seance->add($seance);
-        }
-
-        return $this;
-    }
-
-    public function removeSeance(Seance $seance): static
-    {
-        $this->Seance->removeElement($seance);
-
-        return $this;
+        $this->Seance = $Seance;
     }
 
     /**
-     * @return Collection<int, User>
+     * @return User|null
      */
-    public function getUsers(): Collection
+    public function getUsers(): ?User
     {
         return $this->users;
     }
 
-    public function addUser(User $user): static
+    /**
+     * @param User|null $users
+     */
+    public function setUsers(?User $users): void
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addReservation($this);
-        }
-
-        return $this;
+        $this->users = $users;
     }
 
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeReservation($this);
-        }
 
-        return $this;
-    }
 }

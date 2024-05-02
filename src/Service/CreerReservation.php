@@ -65,7 +65,7 @@ class CreerReservation {
         if ($seance == null) {
             throw new \Exception("La seance n'existe pas !");
         }
-        // Vérification seance est pas dans le futur
+        // Vérification seance est pas dans le passer
         $dateJour = new \DateTime();
         if ($seance->getDateProjection() < $dateJour) {
             throw new \Exception("La seance est déja passer !");
@@ -91,9 +91,8 @@ class CreerReservation {
         $reservation->setNbPlaceReservation($nbPlaceReserver);
         $reservation->setDateRéservation();
         $reservation->setMontant($seance->getTarifNormal()*$nbPlaceReserver);
-        $reservation->addUser($user);
-        dd($seance);
-        $reservation->addSeance($seance);
+        $reservation->setUsers($user);
+        $reservation->setSeance($seance);
 
         // Ajout a la BDD
         $this->entityManager->persist($reservation);
