@@ -33,10 +33,10 @@ class Réservation {
 - montant : float
 }
 
-Séance"0..*" --> "1..1"Film :> projecte
-Séance"0..*" --> "1..1"Salle :> Se Déroule
+Séance"0..*" --> "1..1"Film :> Projette
+Séance"0..*" --> "1..1"Salle :> Se déroule
 
-Réservation"0..*" <-- "1..1"User :< réalise
+Réservation"0..*" --> "1..1"User :> Est réalisée
 
 Séance"1..1" <-- "0..*"Réservation :< Concerne
 @enduml
