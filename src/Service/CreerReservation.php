@@ -57,7 +57,7 @@ class CreerReservation {
             }
         }
         if ($roleTrouver == false) {
-            throw new \Exception("L'utilisateur n'a pas le role User !");
+            throw new \Exception("L'utilisateur n'a pas le role Utilisateur !");
         }
 
         // Vérification seance existe
@@ -68,7 +68,7 @@ class CreerReservation {
         // Vérification seance est pas dans le passer
         $dateJour = new \DateTime();
         if ($seance->getDateProjection() < $dateJour) {
-            throw new \Exception("La seance est déja passer !");
+            throw new \Exception("La seance est deja passee !");
         }
 
         // verification nb de place reserver <= nb de place encore dispo (nb place SALLE, nb de place déja reserver)
@@ -81,7 +81,7 @@ class CreerReservation {
         $nbPlaceDispo = $nbPlaceSalle - $nbPlaceDejaPrise;
         $nbPlaceReserver = $requete->nbPlace;
         if ($nbPlaceReserver > $nbPlaceDispo) {
-            throw new \Exception("Le nombre de place resevre est supérieur au place disponnible : il reste $nbPlaceDispo place");
+            throw new \Exception("Le nombre de places reservees est superieur au nombre de places disponibles : il reste $nbPlaceDispo places");
         }
 
 

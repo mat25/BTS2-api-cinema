@@ -48,4 +48,15 @@ class SeanceController extends AbstractController
             return new JsonResponse($e->getMessage(), 400);
         }
     }
+    #[Route('/info-seance', name: 'app_info_seance')]
+    public function infoSeance(Request $request,CreerReservation $creerReservation,SerializerInterface $serializer,TokenInterface $tokenInterface): Response
+    {
+
+        // Si pas d'erreur on renvoie le User avec un status 201
+        $reservationSerialized = $serializer->serialize($reservation, 'json', ['groups' => 'info_reservation']);
+        return new Response($reservationSerialized, 201, [
+            'content-type' => 'application/json'
+        ]);
+
+    }
 }
