@@ -15,19 +15,19 @@ class Seance
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?\DateTimeInterface $dateProjection = null;
 
     #[ORM\Column]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?float $tarifNormal = null;
 
     #[ORM\Column]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?float $tarifReduit = null;
 
     #[ORM\OneToMany(mappedBy: 'Seance', targetEntity: Reservation::class)]
@@ -35,9 +35,11 @@ class Seance
 
     #[ORM\ManyToOne(targetEntity: Salle::class, inversedBy: 'seances')]
 //    #[Groups(['details_films'])]
+//    #[Groups(['info_seance'])]
     private Salle $Salle;
 
     #[ORM\ManyToOne(targetEntity: Film::class, inversedBy: 'seances')]
+//    #[Groups(['info_seance'])]
     private Film $film;
 
     public function __construct()
@@ -113,18 +115,13 @@ class Seance
         return $this;
     }
 
-    /**
-     * @return Collection<int, Salle>
-     */
+
     public function getSalle(): Salle
     {
         return $this->Salle;
     }
 
-    /**
-     * @return Collection<int, Film>
-     */
-    public function getFilm(): Collection
+    public function getFilm(): Film
     {
         return $this->film;
     }

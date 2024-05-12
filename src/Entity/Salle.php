@@ -17,11 +17,11 @@ class Salle
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?string $nomSalle = null;
 
     #[ORM\Column]
-    #[Groups(['details_films'])]
+    #[Groups(['details_films','info_seance'])]
     private ?int $nbPlace = null;
 
     public function __construct()
